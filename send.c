@@ -90,14 +90,6 @@ void ble_config() {
 }
 
 
-void resetBTModule() {
-    //Branch the reset pin of module to ground
-    TRISBbits.TRISB15 = 0; //0for output and 1 for input //RB15 is set in this case
-    PORTBbits.RB15 = 0;
-    __delay_ms(50);
-    PORTBbits.RB15 = 1;
-}
-
 void UARTInit230400(void) {
     CLKDIV = 0x0000;
     //    TRISB = 0x0000;     // port B en sortie
@@ -168,32 +160,6 @@ void UARTSetVerbose() {
     UARTWriteChar('1');
 }
 
-void UARTtestBT1(int i) {
-    UARTWriteChar('T');
-    UARTWriteChar('E');
-    UARTWriteChar('S');
-    UARTWriteChar('T');
-    UARTWriteChar('1');
-    UARTWriteChar('\n');
-}
-
-void UARTtestBT2(int i) {
-    UARTWriteChar('T');
-    UARTWriteChar('E');
-    UARTWriteChar('S');
-    UARTWriteChar('T');
-    UARTWriteChar('2');
-    UARTWriteChar('\n');
-}
-
-void UARTgetBaudRate() {
-    UARTBasicCommand();
-    UARTWriteChar('B');
-    UARTWriteChar('A');
-    UARTWriteChar('U');
-    UARTWriteChar('D');
-    UARTWriteChar('?');
-}
 
 void UARTConfigBaudRate215400() {
     UARTBasicCommand();
@@ -202,24 +168,6 @@ void UARTConfigBaudRate215400() {
     UARTWriteChar('U');
     UARTWriteChar('D');
     UARTWriteChar('8');
-}
-
-void UARTGetFilter() {
-    UARTBasicCommand();
-    UARTWriteChar('F');
-    UARTWriteChar('I');
-    UARTWriteChar('L');
-    UARTWriteChar('T');
-    UARTWriteChar('?');
-}
-
-void UARTGetADType() {
-    UARTBasicCommand();
-    UARTWriteChar('A');
-    UARTWriteChar('D');
-    UARTWriteChar('V');
-    UARTWriteChar('I');
-    UARTWriteChar('?');
 }
 
 void UARTSetADTypeIOSVal() {
@@ -250,33 +198,6 @@ void UARTSleep() {
     UARTWriteChar('P');
 }
 
-void UARTgetBondType() {
-    UARTBasicCommand();
-    UARTWriteChar('T');
-    UARTWriteChar('Y');
-    UARTWriteChar('P');
-    UARTWriteChar('E');
-    UARTWriteChar('?');
-}
-
-void UARTgetVersionSoft() {
-    UARTBasicCommand();
-    UARTWriteChar('V');
-    UARTWriteChar('E');
-    UARTWriteChar('R');
-    UARTWriteChar('S');
-    UARTWriteChar('?');
-}
-
-void UARTgetMode() {
-    UARTBasicCommand();
-    UARTWriteChar('M');
-    UARTWriteChar('O');
-    UARTWriteChar('D');
-    UARTWriteChar('E');
-    UARTWriteChar('?');
-}
-
 void UARTsetMode() {
     UARTBasicCommand();
     UARTWriteChar('M');
@@ -293,14 +214,6 @@ void UARTsetPower() {
     UARTWriteChar('W');
     UARTWriteChar('E');
     UARTWriteChar('3');
-}
-void UARTGetPower() {
-    UARTBasicCommand();
-    UARTWriteChar('P');
-    UARTWriteChar('O');
-    UARTWriteChar('W');
-    UARTWriteChar('E');
-    UARTWriteChar('?');
 }
 
 void UARTRestartModule() {
@@ -320,14 +233,6 @@ void UARTReliableAd() {
     UARTWriteChar('I');
     UARTWriteChar('1');
 }
-void UARTStartBTMod() {
-    UARTBasicCommand();
-    UARTWriteChar('S');
-    UARTWriteChar('T');
-    UARTWriteChar('A');
-    UARTWriteChar('R');
-    UARTWriteChar('T');
-}
 
 void UARTWakeUp() {
     int i;
@@ -335,27 +240,6 @@ void UARTWakeUp() {
         UARTWriteChar('C');
     }
     UARTWriteChar('\0');
-}
-
-int UARTIsConnected() {
-    int isOk = 0x00;
-    char buffer[8] = {'\0','\0','\0','\0','\0','\0','\0','\0'};
-    int i = 0;
-    if(U1STAbits.OERR == 1) {
-        U1STAbits.OERR == 0;
-        isOk = 0xFF;
-    }
-    if(U1STAbits.URXDA == 1) {
-        isOk = 0xFF;
-        //U1STAbits.OERR = 0;    
-    }
-    while(U1STAbits.URXDA == 1) {
-        if(i<8) {
-           buffer[i] = U1RXREG;
-        }
-        i++;
-    }
-    return isOk;
 }
 
 void UARTWriteChar(char data) {

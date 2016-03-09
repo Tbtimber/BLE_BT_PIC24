@@ -22,18 +22,9 @@ void UARTWakeUp();
 void resetBTModule();
 void UARTInit230400(void);
 void UARTInit9600(void);
-void UARTtestBT1(int);
 void UARTSetBTName();
-void UARTtestBT2(int);
-void UARTgetBaudRate();
-void UARTGetFilter();
-void UARTGetADType();
 void UARTSleep();
 void initBTModule();
-void UARTgetBondType();
-void UARTgetVersionSoft();
-void UARTgetMode();
 void UARTSetADTypeIOSVal();
-int UARTIsConnected();
 #endif	/* _UART_H */
 
