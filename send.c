@@ -80,7 +80,7 @@ void ble_config() {
     IEC0bits.U1TXIE = 1; // interrupt request are enabled 
     
     //Receiver
-    IPC2bits.U1RXIP = 0b100;
+    IPC2bits.U1RXIP = 0b011;
     IFS0bits.U1RXIF = 0;//clear flag !
     IEC0bits.U1RXIE = 1;
     
@@ -289,4 +289,3 @@ void initBTModule() {
     }
     
 }
-
